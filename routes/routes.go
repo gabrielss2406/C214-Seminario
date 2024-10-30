@@ -41,10 +41,26 @@ func MarcarComoFeitoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func RemoverToDoHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "ID inválido", http.StatusBadRequest)
+		return
+	}
+	if sucesso := lista.Remover(id); !sucesso {
+		http.Error(w, "Tarefa não encontrada", http.StatusNotFound)
+	} else {
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
 func SetupRoutes() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/todos", AdicionarToDoHandler).Methods("POST")
 	r.HandleFunc("/todos", ListarToDosHandler).Methods("GET")
 	r.HandleFunc("/todos/{id:[0-9]+}", MarcarComoFeitoHandler).Methods("PUT")
+	r.HandleFunc("/todos/{id:[0-9]+}", RemoverToDoHandler).Methods("DELETE")
 	return r
 }
