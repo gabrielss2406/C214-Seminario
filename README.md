@@ -44,5 +44,7 @@ OBS: essa maneira de rodar não implementar hot reload, caso queira, configure o
 
 ## Rodando os testes
 
-Ainda não sei Ewel
-
+Para rodar os testes e criar um report em html use a linha de comando abaixo:
+```
+go test -json ./tests | go-test-report -o test_report.html
+```
