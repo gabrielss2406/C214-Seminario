@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main  # Altere para o nome da sua branch principal, se necessário
+      - main
   pull_request:
     branches:
       - main
@@ -43,5 +43,12 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
 
-      - name: Run tests
-        run: go test ./... -v
+      - name: Run tests and generate report
+        run: |
+          go test -json ./tests | go-test-report -o test_report.html
+          
+      - name: Upload test report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test_report.html
