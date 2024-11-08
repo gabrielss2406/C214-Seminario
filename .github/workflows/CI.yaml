@@ -43,6 +43,9 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
 
+      - name: Install go-test-report
+        run: go install github.com/vakenbolt/go-test-report/
+
       - name: Run tests and generate report
         run: |
           go test -json ./tests | go-test-report -o test_report.html
