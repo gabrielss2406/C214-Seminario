@@ -44,7 +44,7 @@ jobs:
         run: go mod tidy
 
       - name: Install go-test-report
-        run: go install github.com/vakenbolt/go-test-report/
+        run: go get github.com/vakenbolt/go-test-report@latest
 
       - name: Run tests and generate report
         run: |
