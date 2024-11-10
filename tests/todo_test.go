@@ -95,3 +95,20 @@ func TestListarNegativo(t *testing.T) {
 	assert.NotEqual(t, 0, len(itens), "A lista não está vazia")
 	assert.NotEqual(t, 3, len(itens), "A lista não contém 3 tarefas")
 }
+
+func TestMarcarComoFeitoNegativo(t *testing.T) {
+	lista := todo.ToDoList{}
+	tarefa := lista.Adicionar("Fazer exercício")
+	// Como a tarefa não foi feita, o status 'feito' tem que estar desmarcado
+	assert.False(t, tarefa.Feito, "O status 'Feito' não está marcado")
+}
+
+func TestRemoverNegativo(t *testing.T) {
+	lista := todo.ToDoList{}
+	tarefa := lista.Adicionar("Limpar o código")
+	// Tenta remover uma tarefa com ID inexistente
+	sucesso := lista.Remover(tarefa.ID + 1)
+	// Verifica que a tarefa não foi removida
+	assert.False(t, sucesso, "Esperado falha ao tentar remover a tarefa")
+	assert.Equal(t, 1, len(lista.Itens), "Esperado 1 tarefa na lista após tentativa de remoção incorreta")
+}
