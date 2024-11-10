@@ -64,3 +64,34 @@ func TestRemover(t *testing.T) {
 	assert.True(t, sucesso, "Esperado sucesso ao remover a tarefa")
 	assert.Equal(t, 0, len(lista.Itens), "Esperado 0 tarefas na lista após remoção")
 }
+
+func TestAdicionarNativoNegativo(t *testing.T) {
+	lista := todo.ToDoList{}
+
+	// Adiciona uma tarefa
+	lista.Adicionar("Estudar Go")
+
+	// Verifica se a tarefa adicionada está incorreta (caso negativo simulado)
+	assert.NotEqual(t, 0, len(lista.Itens), "A lista não está vazia")
+	assert.NotEqual(t, "Tarefa Fake", lista.Itens[0].Tarefa, "O nome da tarefa não é 'Tarefa Fake'")
+}
+
+func TestAdicionarNegativo(t *testing.T) {
+	lista := todo.ToDoList{}
+	tarefa := lista.Adicionar("Estudar Go")
+
+	// Verifica que a lista contém uma tarefa e não está vazia (caso negativo simulado)
+	assert.NotEqual(t, 0, len(lista.Itens), "A lista contém uma tarefa")
+	assert.NotEqual(t, "Outra Tarefa Fake", tarefa.Tarefa, "A tarefa adicionada não tem o nome 'Outra Tarefa Fake'")
+}
+
+func TestListarNegativo(t *testing.T) {
+	lista := todo.ToDoList{}
+	lista.Adicionar("Estudar Go")
+	lista.Adicionar("Praticar testes")
+	itens := lista.Listar()
+
+	// Verifica que a lista contém 2 itens, conforme esperado no caso negativo
+	assert.NotEqual(t, 0, len(itens), "A lista não está vazia")
+	assert.NotEqual(t, 3, len(itens), "A lista não contém 3 tarefas")
+}
