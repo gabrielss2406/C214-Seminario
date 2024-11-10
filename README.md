@@ -15,7 +15,7 @@ Um simples aplicativo de ToDo List desenvolvido em Go. Este projeto permite adic
 
 2. **Clone o repositório**:
    ```bash
-   git clone <URL do repositório>
+   git clone https://github.com/gabrielss2406/C214-Seminario.git
    cd todolist
    ```
 
