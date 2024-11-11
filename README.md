@@ -44,7 +44,14 @@ OBS: essa maneira de rodar não implementar hot reload, caso queira, configure o
 
 ## Rodando os testes
 
-Para rodar os testes e criar um report em html use a linha de comando abaixo:
+Para rodar os testes:
 ```
+go test
+```
+
+Para rodar os testes e criar um report em html instale o pacote e depois rode os testes com as linhas de comando abaixo:
+```
+go get github.com/vakenbolt/go-test-report@latest
+go install github.com/vakenbolt/go-test-report@latest
 go test -json ./tests | go-test-report -o test_report.html
 ```
