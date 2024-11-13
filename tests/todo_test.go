@@ -5,6 +5,7 @@ import (
 	todo "todolist/internal" // Ajuste o caminho de import conforme o nome do seu módulo
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 // TestAdicionar verifica se uma tarefa é adicionada corretamente
@@ -20,6 +21,50 @@ func TestAdicionarNativo(t *testing.T) {
 	if tarefa.Tarefa != "Estudar Go" {
 		t.Errorf("Esperado 'Estudar Go', obtido '%s'", tarefa.Tarefa)
 	}
+}
+
+type ToDo struct {
+	ID     int
+	Tarefa string
+	Feito  bool
+}
+
+// Mock da estrutura ToDoList
+type MockToDoList struct {
+	mock.Mock
+}
+
+func (m *MockToDoList) Adicionar(tarefa string) ToDo {
+	args := m.Called(tarefa)
+	return args.Get(0).(ToDo)
+}
+
+func (m *MockToDoList) Listar() []ToDo {
+	args := m.Called()
+	return args.Get(0).([]ToDo)
+}
+
+// Teste com mock
+func TestListarComMock(t *testing.T) {
+	// Cria o mock
+	mockLista := new(MockToDoList)
+
+	// Definindo comportamento esperado para o mock do método Listar
+	mockLista.On("Listar").Return([]ToDo{
+		{ID: 1, Tarefa: "Estudar Go", Feito: false},
+		{ID: 2, Tarefa: "Praticar testes", Feito: false},
+	})
+
+	// Obtém a lista de tarefas
+	itens := mockLista.Listar()
+
+	// Verifica se o mock foi chamado corretamente
+	mockLista.AssertExpectations(t)
+
+	// Verifica se a lista contém 2 tarefas
+	assert.Equal(t, 2, len(itens), "Esperado 2 tarefas na lista")
+	assert.Equal(t, "Estudar Go", itens[0].Tarefa, "Esperado tarefa 'Estudar Go'")
+	assert.Equal(t, "Praticar testes", itens[1].Tarefa, "Esperado tarefa 'Praticar testes'")
 }
 
 func TestAdicionar(t *testing.T) {
