@@ -23,7 +23,11 @@ func AdicionarToDoHandler(w http.ResponseWriter, r *http.Request) {
 
 func ListarToDosHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(lista.Listar())
+	err := json.NewEncoder(w).Encode(lista.Listar())
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 }
 
 func MarcarComoFeitoHandler(w http.ResponseWriter, r *http.Request) {
