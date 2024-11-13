@@ -39,9 +39,8 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
 
-      - name: Build for Windows
-        run: |
-          GOOS=windows GOARCH=amd64 go build
+      - name: Build
+        run: go build
 
       - name: Upload executable
         uses: actions/upload-artifact@v4
@@ -64,6 +63,12 @@ jobs:
 
       - name: Install dependencies
         run: go mod tidy
+
+      - name: Get go-test-report
+        run: go get github.com/vakenbolt/go-test-report@latest
+
+      - name: Install go-test-report
+        run: go install github.com/vakenbolt/go-test-report@latest
 
       - name: Run tests and generate report
         run: |
