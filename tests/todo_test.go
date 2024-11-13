@@ -8,6 +8,12 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+type ToDo struct {
+	ID     int
+	Tarefa string
+	Feito  bool
+}
+
 // TestAdicionar verifica se uma tarefa é adicionada corretamente
 func TestAdicionarNativo(t *testing.T) {
 	lista := todo.ToDoList{}
@@ -23,20 +29,9 @@ func TestAdicionarNativo(t *testing.T) {
 	}
 }
 
-type ToDo struct {
-	ID     int
-	Tarefa string
-	Feito  bool
-}
-
 // Mock da estrutura ToDoList
 type MockToDoList struct {
 	mock.Mock
-}
-
-func (m *MockToDoList) Adicionar(tarefa string) ToDo {
-	args := m.Called(tarefa)
-	return args.Get(0).(ToDo)
 }
 
 func (m *MockToDoList) Listar() []ToDo {
