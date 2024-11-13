@@ -40,7 +40,7 @@ jobs:
         run: go mod tidy
 
       - name: Build
-        run: go build
+        run: GOOS=windows GOARCH=amd64 go build -o todolist.exe
 
       - name: Upload executable
         uses: actions/upload-artifact@v4
